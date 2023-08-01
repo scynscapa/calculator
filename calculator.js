@@ -29,3 +29,45 @@ function operate(num1, num2, oper) {
             return 'ERROR'; 
     }
 }
+
+let displayValue = '';
+
+const buttons = document.querySelectorAll('button');
+buttons.forEach(button => button.addEventListener('click', buttonClicked));
+
+function buttonClicked(e) {
+    keyId = e.srcElement.id;
+    switch (keyId) {
+        case 'add':
+            displayValue += '+';
+            break;
+        case 'subtract':
+            displayValue += '-';
+            break;
+        case 'multiply':
+            displayValue += '*';
+            break;
+        case 'divide':
+            displayValue += '/';
+            break;
+        case 'equals':
+            doOperation();
+            break;
+        case 'negate':
+            negate();
+            break;
+        default:
+            displayValue = `${displayValue} ${e.srcElement.id}`;
+    }
+
+
+    console.log(displayValue);
+    updateDisplay();    
+    
+    console.log(e.srcElement.id);
+}
+
+function updateDisplay() {
+    const display = document.querySelector('.display');
+    display.textContent = displayValue;
+}
