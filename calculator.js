@@ -11,11 +11,7 @@ function divide(num1, num2) {
     return num1 / num2;
 }
 
-let number1 = 0;
-let number2 = 0;
-let operator = '';
-
-function operate(num1, num2, oper) {
+function operate(num1, oper, num2) {
     switch (oper) {
         case '+':
             return add(num1, num2);
@@ -26,7 +22,7 @@ function operate(num1, num2, oper) {
         case '/':
             return divide(num1, num2);
         default:
-            return 'ERROR'; 
+            return null; 
     }
 }
 
@@ -52,22 +48,44 @@ function buttonClicked(e) {
             break;
         case 'equals':
             doOperation();
+            updateDisplay();
             break;
         case 'negate':
             negate();
             break;
+        case 'clear':
+            clearDisplay();
+            break;
+        case 'decimal':
+            displayValue += '.';
+            break;
         default:
-            displayValue = `${displayValue} ${e.srcElement.id}`;
+            displayValue = `${displayValue}${e.srcElement.id}`;
     }
 
-
-    console.log(displayValue);
-    updateDisplay();    
-    
-    console.log(e.srcElement.id);
+    updateDisplay();
 }
 
 function updateDisplay() {
     const display = document.querySelector('.display');
     display.textContent = displayValue;
+}
+
+function clearDisplay() {
+    displayValue = '';
+    updateDisplay();
+}
+
+function doOperation() {
+    let operation = displayValue.match(/(?=.)([0-9]*)([\+-\/\*])([0-9]*)/g);
+
+    let firstOperation = operation[0].split('');
+    result = operate(Number(firstOperation[0]), firstOperation[1], 
+        Number(firstOperation[2]));
+
+    for (let i = 1; i < operation.length; i++) {
+        let tempOperation = operation[i].split('');
+        result = operate(result, tempOperation[0], Number(tempOperation[1]));
+    }
+    displayValue = result;
 }
