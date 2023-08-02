@@ -3,7 +3,8 @@
 .row2, 
 .row3, 
 .row4, 
-.row5 {
+.row5,
+.display {
     display: flex;
     margin-left: auto;
     margin-right: auto;
