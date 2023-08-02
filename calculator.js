@@ -36,18 +36,23 @@ function buttonClicked(e) {
     switch (keyId) {
         case 'add':
             displayValue += ' + ';
+            enableDecimal();
             break;
         case 'subtract':
             displayValue += ' - ';
+            enableDecimal();
             break;
         case 'multiply':
             displayValue += ' * ';
+            enableDecimal();
             break;
         case 'divide':
             displayValue += ' / ';
+            enableDecimal();
             break;
         case 'equals':
             doOperation();
+            enableDecimal();
             updateDisplay();
             break;
         case 'negate':
@@ -55,9 +60,11 @@ function buttonClicked(e) {
             break;
         case 'clear':
             clearDisplay();
+            enableDecimal();
             break;
         case 'decimal':
             displayValue += '.';
+            disableDecimal();
             break;
         default:
             displayValue = `${displayValue}${e.srcElement.id}`;
@@ -84,5 +91,15 @@ function  doOperation() {
         result = operate(Number(result), operation.splice(0,1)[0], Number(operation.splice(0,1)));
     }
     
-    displayValue = result;
+    displayValue = Math.round(result * 1000) / 1000;
+}
+
+function disableDecimal() {
+    decimal = document.getElementById('decimal');
+    decimal.removeEventListener('click', buttonClicked);
+}
+
+function enableDecimal() {
+    decimal = document.getElementById('decimal');
+    decimal.addEventListener('click', buttonClicked);
 }
