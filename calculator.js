@@ -35,16 +35,16 @@ function buttonClicked(e) {
     keyId = e.srcElement.id;
     switch (keyId) {
         case 'add':
-            displayValue += '+';
+            displayValue += ' + ';
             break;
         case 'subtract':
-            displayValue += '-';
+            displayValue += ' - ';
             break;
         case 'multiply':
-            displayValue += '*';
+            displayValue += ' * ';
             break;
         case 'divide':
-            displayValue += '/';
+            displayValue += ' / ';
             break;
         case 'equals':
             doOperation();
@@ -76,16 +76,13 @@ function clearDisplay() {
     updateDisplay();
 }
 
-function doOperation() {
-    let operation = displayValue.match(/(?=.)([0-9]*)([\+-\/\*])([0-9]*)/g);
+function  doOperation() {
+    let operation = displayValue.split(' ');
 
-    let firstOperation = operation[0].split('');
-    result = operate(Number(firstOperation[0]), firstOperation[1], 
-        Number(firstOperation[2]));
-
-    for (let i = 1; i < operation.length; i++) {
-        let tempOperation = operation[i].split('');
-        result = operate(result, tempOperation[0], Number(tempOperation[1]));
+    result = operation.splice(0,1);
+    while (operation.length > 1) {
+        result = operate(Number(result), operation.splice(0,1)[0], Number(operation.splice(0,1)));
     }
+    
     displayValue = result;
 }
