@@ -16,6 +16,8 @@
 
 .display {
     height: 40px;
+    width: 160px;
+    border: 1px solid black;
 }
 
 button {
@@ -27,4 +29,12 @@ button {
 #equals {
     height: 40px;
     width: 80px;
+}
+
+#equals {
+    background-color: aquamarine;
+}
+
+.operation {
+    background-color: rgb(235, 168, 168);
 }
